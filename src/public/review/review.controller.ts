@@ -6,7 +6,7 @@ export class ReviewController {
   constructor(private service: ReviewService) {}
 
   @Get()
-  getAllReviews(): string {
+  getAllReviews() {
     return this.service.getAllReviews();
   }
 }
