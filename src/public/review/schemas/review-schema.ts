@@ -1,14 +1,14 @@
-import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
-export const reviewSchema = z.object({
-  id: z.uuid(),
-  content: z.string().min(1).max(1000),
-  rating: z.number().min(1).max(5),
-  createdAt: z.date().default(new Date()),
-  updatedAt: z.date().default(new Date()),
+export const CreateReviewSchema = z.object({
+  content: z.string().min(1, 'Content is required').max(1000, 'Content must be less than 1000 characters'),
+  rating: z.number().int().min(1, 'Rating must be at least 1').max(5, 'Rating must be at most 5'),
 });
 
-export type ReviewSchema = z.infer<typeof reviewSchema>;
+export const UpdateReviewSchema = z.object({
+  content: z.string().min(1).max(1000).optional(),
+  rating: z.number().int().min(1).max(5).optional(),
+});
 
-export class ReviewDto extends createZodDto(reviewSchema) {}
+export type CreateReviewDto = z.infer<typeof CreateReviewSchema>;
+export type UpdateReviewDto = z.infer<typeof UpdateReviewSchema>;
